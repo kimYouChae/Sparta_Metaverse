@@ -57,5 +57,16 @@ public class Player
         this._otherGameScore = 0;
     }
 
+    public bool F_UpdateHp(int mount) 
+    {
+        _playerHP += mount;
+
+        if (_playerHP <= 0)
+            return false;
+        else
+            return true;
+    }
+
+    
 }
 #endregion

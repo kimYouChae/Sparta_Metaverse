@@ -18,7 +18,7 @@ public class BlockGenerate : MonoBehaviour
     [Header("===Position===")]
     [SerializeField] private Transform _upGenerationTrs;
     [SerializeField] private Transform _downGenerationTrs;
-    [SerializeField] private Transform _fluppyPlayerTrs;
+
 
     [Header("===State===")]
     [SerializeField] float _blockCoolTime = 3f;
@@ -27,10 +27,6 @@ public class BlockGenerate : MonoBehaviour
 
     [Header("===Ui===")]
     [SerializeField] private FluppyUi _fluppuUi;
-
-
-    // 프로퍼티
-    public Transform FluppyPlayerTrs => _fluppyPlayerTrs;
 
     public void F_StartFlappyBird() 
     {

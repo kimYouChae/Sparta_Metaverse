@@ -14,8 +14,8 @@ public class LayerManger : Singleton<LayerManger>
 
     public LayerMask PlayerLayer { get => _playerLayer; }
     public LayerMask BlockLayer { get => _blockLayer; }
-    public int PlayerLayerNum { get => PlayerLayerNum1; }
-    public int PlayerLayerNum1 { get => _playerLayerNum;}
+    public int PlayerLayerNum { get => _playerLayerNum; }
+    public int BlockLayerNum { get => _blockLayerNum;  }
 
     protected override void Singleton_Awake()
     {

@@ -11,9 +11,9 @@ public class PlayerManager : Singleton<PlayerManager>
     [Header("===Player===")]
     [SerializeField] private Transform _playerTrs;
     [SerializeField] private PlayerStateType _playerStateType;
+    [SerializeField] private Player _nowPlayer;
 
     [Header("===Sript===")]
-    [SerializeField] private BlockGenerate _flappyBirdGame;
     [SerializeField] private PlayerMovement _playerMovement;
     [SerializeField] private CameraMovement _cameraMovement;
 
@@ -23,7 +23,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     protected override void Singleton_Awake()
     {
-        
+        _nowPlayer = new Player("김유채" , 10 , 5 , 5);
     }
 
     private void Start()
@@ -43,10 +43,10 @@ public class PlayerManager : Singleton<PlayerManager>
             F_ChangeActionByState();
 
             // 미니게임 시작
-            _flappyBirdGame.F_StartFlappyBird();
+            MiniGameManager.Instnace.fluppyBirdGame.F_StartFlappyBird();
 
             // 플레이어 위치 - 미니게임 위치로 
-            F_ChangePlayerPosition(_flappyBirdGame.FluppyPlayerTrs.position);
+            F_ChangePlayerPosition(MiniGameManager.Instnace.FluppyPlayerTrs.position);
 
         }
         if (Input.GetKeyDown(KeyCode.L))
@@ -57,7 +57,7 @@ public class PlayerManager : Singleton<PlayerManager>
             F_ChangeActionByState();
 
             // 미니게임 종료
-            _flappyBirdGame.F_StopFlappyBird();
+            MiniGameManager.Instnace.fluppyBirdGame.F_StopFlappyBird();
 
             // 플레이어 위치 0,0,0으로
             F_ChangePlayerPosition(new Vector3(0,0,0));
@@ -73,6 +73,26 @@ public class PlayerManager : Singleton<PlayerManager>
     public void F_ChangePlayerPosition(Vector3 potision) 
     {
         _playerTrs.position = potision;
+    }
+
+    // FluppyGame - 장애물과 충돌
+    public void F_CollisionToBlcok() 
+    {
+        bool flag = _nowPlayer.F_UpdateHp(-1);
+
+        // 죽으면 ?
+        if (!flag)
+        {
+            // 게임 끝내고
+            // 점수저장후
+            // 마을로 돌아오기        
+        }
+        else 
+        {
+            // 안죽으면 -> Fluppy Ui 업데이트 
+            MiniGameManager.Instnace.fluidUi.F_UpdateHeartIcon(1);
+        }
+        
     }
     
 }
