@@ -45,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
 
             // 미니게임1 -> 중력 0, addforce
             case PlayerStateType.MinigameOne:
-                F_OnOffGravity();
+                // F_OnOffGravity();
                 _movementAction = F_MiniGameMovement;
                 break;
         }
@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         }   
     }
 
-    private void F_OnOffGravity() 
+    public void F_OnOffGravity() 
     {
         // 1이면 0으로
         // 0 이면 1로 

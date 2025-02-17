@@ -19,6 +19,7 @@ public class PlayerManager : Singleton<PlayerManager>
 
     public Transform playerTrs => _playerTrs;
     public PlayerStateType playerStateType => _playerStateType;
+    public PlayerMovement playerMovement => _playerMovement;
 
     protected override void Singleton_Awake()
     {

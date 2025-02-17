@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -24,15 +25,40 @@ public class BlockGenerate : MonoBehaviour
     [SerializeField] float _endOfMap = -12f;
     [SerializeField] int _score = 0;
 
+    [Header("===Ui===")]
+    [SerializeField] private FluppyUi _fluppuUi;
+
+
     // 프로퍼티
     public Transform FluppyPlayerTrs => _fluppyPlayerTrs;
 
     public void F_StartFlappyBird() 
     {
+        // 값 초기화 
         _blockCoolTime = 3f;
         _endOfMap = -12f;
         _score = 0;
 
+        StartCoroutine(IE_WaitBeforeGame());
+    }
+
+    IEnumerator IE_WaitBeforeGame() 
+    {
+        for (int i = 3; i >= 1; i--) 
+        {
+            // UI에 카운터
+            _fluppuUi.F_UpeateTimeCount(i);
+
+            // 1초 대기 
+            yield return new WaitForSeconds(1f);
+        }
+
+        _fluppuUi.F_UpeateTimeCount(-1);
+
+        // 카운터 후 플레이어 중력 조정
+        PlayerManager.Instnace.playerMovement.F_OnOffGravity();
+
+        // 블럭 생성, 움직임, 삭제 동작
         StartCoroutine(IE_BlockGeneMove());
         StartCoroutine(IE_BlockMove());
     }
@@ -73,7 +99,7 @@ public class BlockGenerate : MonoBehaviour
                     // 리스트에서 삭제 
                     _generateBlock.Remove(_nowBlock);
                     // 블럭 삭제 
-                    Destroy(_nowBlock.gameObject);
+                    Destroy(_nowBlock.gameObject, 1f);
                 }
             }
 
