@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,31 +8,56 @@ public class CameraMovement : MonoBehaviour
     [Header("===Camera===")]
     [SerializeField] private Transform _camera;         // 카메라 
     [SerializeField] private Transform _playerTrs;
-    [SerializeField] private Vector3 _cameraDestination;   // 카메라 위치 
 
     [Header("===Map Edge===")]
     [SerializeField] private Transform _leftDownEdge;   // 왼쪽 아래
     [SerializeField] private Transform _rightUpEdge;    // 오른쪽 위
 
+    [Header("===MiniGame===")]
+    [SerializeField] private Transform _miniGameOne;
+
     [Header("===Half Camera===")]
     float halfWidth = 8.8f;
     float halfHeight = 5f;
+    Vector3 _cameraZOffset = new Vector3(0,0,-10);
+
+    [Header("===Action===")]
+    [SerializeField] Action _cameraAction;
 
     private void Start()
     {
         _playerTrs = PlayerManager.Instnace.playerTrs;
+
+        // 초기 - 마을
+        _cameraAction = F_CheckLimitAndFollow;
     }
 
     private void LateUpdate()
     {
         if (_camera != null) 
         {
-            F_CheskCameraLimit();
-            _camera.position = _cameraDestination;
+            if(_cameraAction != null)
+                _cameraAction.Invoke();
         }
     }
 
-    private void F_CheskCameraLimit() 
+    // PlayerManger에서 상태가 변화될 때 1회 실행
+    public void F_UpdateCameraMovement(PlayerStateType type) 
+    {
+        switch (type)
+        {
+            // 마을일때 -> 플레이어 따라 
+            case PlayerStateType.Village:
+                _cameraAction = F_CheckLimitAndFollow;
+                break;
+            // 미니게임1 -> 게임장에 고정 
+            case PlayerStateType.MinigameOne:
+                _cameraAction = F_MiniGame1Camera;
+                break;
+        }
+    }
+
+    private void F_CheckLimitAndFollow() 
     {
         // x와 y 위치를 각각 제한
         float clampedX = Mathf.Clamp(_playerTrs.position.x,
@@ -43,7 +69,12 @@ public class CameraMovement : MonoBehaviour
             _rightUpEdge.position.y - halfHeight);
 
         // 최종 카메라 위치 설정
-        _cameraDestination = new Vector3(clampedX, clampedY, -10);
+        _camera.position = new Vector3(clampedX, clampedY, 0) + _cameraZOffset;
+
     }
 
+    private void F_MiniGame1Camera() 
+    {
+        _camera.position = _miniGameOne.position + _cameraZOffset;
+    }
 }
