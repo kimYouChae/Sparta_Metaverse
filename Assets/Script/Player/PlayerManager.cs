@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+enum PlayerStateType 
+{
+    Village,            // 마을
+    MinigameOne,        // 미니게임1
+    MinigameTwo         // 미니게임2
+
+}
+
 public class PlayerManager : MonoBehaviour
 {
     // ##TODO : 싱글톤은 상위에 올리기
