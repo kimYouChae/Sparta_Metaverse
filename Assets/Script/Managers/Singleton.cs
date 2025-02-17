@@ -44,7 +44,7 @@ public abstract class Singleton<T> : MonoBehaviour
 
     private void F_SettingDontDestroy() 
     {
-        if (_instance.name == "DontDestoryManager") 
+        if (gameObject.name == "DontDestoryManager") 
         {
             DontDestroyOnLoad(this.gameObject);
         }

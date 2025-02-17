@@ -17,10 +17,15 @@ public class BlockGenerate : MonoBehaviour
     [Header("===Position===")]
     [SerializeField] private Transform _upGenerationTrs;
     [SerializeField] private Transform _downGenerationTrs;
+    [SerializeField] private Transform _fluppyPlayerTrs;
 
+    [Header("===State===")]
     [SerializeField] float _blockCoolTime = 3f;
     [SerializeField] float _endOfMap = -12f;
     [SerializeField] int _score = 0;
+
+    // 프로퍼티
+    public Transform FluppyPlayerTrs => _fluppyPlayerTrs;
 
     public void F_StartFlappyBird() 
     {
@@ -30,6 +35,11 @@ public class BlockGenerate : MonoBehaviour
 
         StartCoroutine(IE_BlockGeneMove());
         StartCoroutine(IE_BlockMove());
+    }
+
+    public void F_StopFlappyBird() 
+    {
+        StopAllCoroutines();
     }
 
     IEnumerator IE_BlockMove() 
