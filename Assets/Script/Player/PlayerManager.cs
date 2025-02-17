@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : Singleton<PlayerManager>
 {
-    // ##TODO : 싱글톤은 상위에 올리기
-    static private PlayerManager instance;
-    public static PlayerManager Instnace { get => instance; }
 
     [Header("===Player===")]
     [SerializeField] private Transform _playerTrs;
@@ -20,10 +18,11 @@ public class PlayerManager : MonoBehaviour
     public Transform playerTrs => _playerTrs;
     public PlayerStateType playerStateType => _playerStateType;
 
-    private void Awake()
+    protected override void Singleton_Awake()
     {
-        instance = this;
+        
     }
+
     private void Start()
     {
         // 처음은 마을로 설정 
