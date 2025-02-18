@@ -74,8 +74,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void F_OnOffGravity() 
     {
-        // 1이면 0으로
-        // 0 이면 1로 
+        // 플레이어 중력은 초기에 0.5 이여야한다 
+        // 0.5 -> 0
+        // 0 -> 0.5
         _playerRb.gravityScale = _playerRb.gravityScale == _gravityForece ? 0 : _gravityForece;
     }
 }
