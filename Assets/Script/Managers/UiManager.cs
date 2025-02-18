@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
 public class UiManager : Singleton<UiManager>
 {
@@ -12,11 +13,14 @@ public class UiManager : Singleton<UiManager>
     [Header("===PopUp===")]
     [SerializeField] private GameObject _endGamePopUp;
     [SerializeField] private GameObject _inventoryPopUp;
+    [SerializeField] private GameObject _miniGamePopup;
+    [SerializeField] private GameObject _scorePopUp;
 
     [Header("===Button===")]
-    [SerializeField] private Button _settingButton;
-    [SerializeField] private Button _inventoryButton;
-
+    [SerializeField] private Button _settingButton;         // 세팅 버튼 
+    [SerializeField] private Button _inventoryButton;       // 인벤토리 버튼
+    [SerializeField] private Button _enterGameButton;       // 게임시작 버튼
+    
     [Header("===Text===")]
     [SerializeField] private GameObject _timeText;
 
@@ -26,6 +30,9 @@ public class UiManager : Singleton<UiManager>
         _settingButton.onClick.AddListener(() => _endGamePopUp.SetActive( !_endGamePopUp.activeSelf));
         // 인벤토리 버튼 : 인벤토리 팝업 on off
         _inventoryButton.onClick.AddListener(() => _inventoryPopUp.SetActive( !_inventoryPopUp.activeSelf ));
+
+        // 게임시작버튼 : 게임시작 로직 
+        _enterGameButton.onClick.AddListener( PlayerManager.Instnace.F_EnterGame );
     }
 
     // player타입에 따라 panel on off
@@ -42,6 +49,16 @@ public class UiManager : Singleton<UiManager>
                 F_UpdateUi(_fluppyPanel , true);
                 break;
         }
+    }
+
+    public void F_OnOFfMiniGamePopUp(bool flag) 
+    {
+        F_UpdateUi(_miniGamePopup , flag);
+    }
+
+    public void F_OnOffScorePopUp(bool flag) 
+    {
+        F_UpdateUi(_scorePopUp, flag);
     }
 
     private void F_UpdateUi(GameObject ui , bool flag) 

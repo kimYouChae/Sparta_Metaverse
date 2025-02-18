@@ -50,21 +50,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
     private void Update()
     {
-        // ##TODO : 임시 
-        if (Input.GetKeyDown(KeyCode.K))
-        { 
-            _playerStateType = PlayerStateType.MinigameOne;
-
-            // 델리게이트 실행 
-            del_handlePlayerState.Invoke(_playerStateType);
-
-            // 미니게임 시작
-            MiniGameManager.Instnace.fluppyBirdGame.F_StartFlappyBird();
-
-            // 플레이어 위치 - 미니게임 위치로 
-            F_ChangePlayerPosition(MiniGameManager.Instnace.FluppyPlayerTrs.position);
-
-        }
     }
 
     public void F_ChangePlayerPosition(Vector3 potision) 
@@ -114,6 +99,19 @@ public class PlayerManager : Singleton<PlayerManager>
         F_ChangePlayerPosition(new Vector3(0, 0, 0));
     }
 
+    // 게임시작 
+    public void F_EnterGame() 
+    {
+        _playerStateType = PlayerStateType.MinigameOne;
 
+        // 델리게이트 실행 
+        del_handlePlayerState.Invoke(_playerStateType);
+
+        // 미니게임 시작
+        MiniGameManager.Instnace.fluppyBirdGame.F_StartFlappyBird();
+
+        // 플레이어 위치 - 미니게임 위치로 
+        F_ChangePlayerPosition(MiniGameManager.Instnace.FluppyPlayerTrs.position);
+    }
 }
 
