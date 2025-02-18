@@ -14529,6 +14529,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1422882163}
+  - component: {fileID: 1422882165}
   - component: {fileID: 1422882164}
   m_Layer: 0
   m_Name: GameManager
@@ -14561,10 +14562,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1422882162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f0aaa02ba412bc4e8930edf0a279f4c, type: 3}
+  m_Script: {fileID: 11500000, guid: 17986a866268aeb409e08a4443ecc021, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  savePath: 
+  saveFileName: 
+--- !u!114 &1422882165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1422882162}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f18aa7e5f4d37064bae4d5928b151371, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _playerScoreList: []
+  _saveManager: {fileID: 1422882164}
 --- !u!1 &1430750821
 GameObject:
   m_ObjectHideFlags: 0
