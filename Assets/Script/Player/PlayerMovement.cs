@@ -35,6 +35,9 @@ public class PlayerMovement : MonoBehaviour
     public void F_NullMoveAction() 
     {
         _movementAction = null;
+
+        // 힘 초기화
+        _playerRb.velocity = Vector2.zero;
     }
 
     // PlayerManger에서 상태가 변화될 때 1회 실행
