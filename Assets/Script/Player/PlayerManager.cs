@@ -97,6 +97,9 @@ public class PlayerManager : Singleton<PlayerManager>
 
         // 플레이어 위치 0,0,0으로
         F_ChangePlayerPosition(new Vector3(0, 0, 0));
+
+        // 점수보드에 저장 
+        GameManager.Instnace.F_SetPlayerScore(_nowPlayer.PlayerName , _nowPlayer.FlappyGameScore);
     }
 
     // 게임시작 

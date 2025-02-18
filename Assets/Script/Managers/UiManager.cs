@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
@@ -24,15 +25,26 @@ public class UiManager : Singleton<UiManager>
     [Header("===Text===")]
     [SerializeField] private GameObject _timeText;
 
+    [Header("===Prefab===")]
+    [SerializeField] private GameObject _scoreContextPrefab;    // 이름 + 점수 프리팹
+
+    [Header("===Score Scroll View===")]
+    [SerializeField] Transform _content;               // 스크롤뷰의 Context 
+
     protected override void Singleton_Awake()
     {
+       
+    }
+
+    private void Start()
+    {
         // 세팅버튼 : end팝업 on off
-        _settingButton.onClick.AddListener(() => _endGamePopUp.SetActive( !_endGamePopUp.activeSelf));
+        _settingButton.onClick.AddListener(() => _endGamePopUp.SetActive(!_endGamePopUp.activeSelf));
         // 인벤토리 버튼 : 인벤토리 팝업 on off
-        _inventoryButton.onClick.AddListener(() => _inventoryPopUp.SetActive( !_inventoryPopUp.activeSelf ));
+        _inventoryButton.onClick.AddListener(() => _inventoryPopUp.SetActive(!_inventoryPopUp.activeSelf));
 
         // 게임시작버튼 : 게임시작 로직 
-        _enterGameButton.onClick.AddListener( PlayerManager.Instnace.F_EnterGame );
+        _enterGameButton.onClick.AddListener(PlayerManager.Instnace.F_EnterGame);
     }
 
     // player타입에 따라 panel on off
@@ -64,6 +76,23 @@ public class UiManager : Singleton<UiManager>
     private void F_UpdateUi(GameObject ui , bool flag) 
     {
         ui.SetActive( flag );
+    }
+
+    public void F_AddToScoreList(int idx ,ScoreSaveClass scoreclass) 
+    {
+        Debug.Log($"{idx} + {scoreclass.Name} / {scoreclass.Score}");
+        Transform _obj = Instantiate(_scoreContextPrefab).transform;
+
+        // 상위빈오브젝트
+        //     ㄴ 프로필
+        //     ㄴ 이름
+        //     ㄴ 점수
+
+        // 부모오브젝트
+        _obj.SetParent(_content , true);
+        _obj.SetSiblingIndex(idx);      // content의 index번째 자식으로
+        _obj.GetChild(1).GetComponent<TextMeshProUGUI>().text = scoreclass.Name;
+        _obj.GetChild(2).GetComponent<TextMeshProUGUI>().text = scoreclass.Score.ToString();
     }
 
 }

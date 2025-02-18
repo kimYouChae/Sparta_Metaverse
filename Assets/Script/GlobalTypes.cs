@@ -87,3 +87,23 @@ public class Player
     
 }
 #endregion
+
+#region 점수 저장 클래스
+[System.Serializable]
+public class ScoreSaveClass
+{
+    [SerializeField] private string _name;
+    [SerializeField] private int _score;
+
+    public string Name => _name;
+    public int Score => _score;
+
+    public ScoreSaveClass(string name, int score)
+    {
+        this._name = name;
+        this._score = score;
+    }
+
+}
+
+#endregion
