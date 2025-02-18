@@ -14,11 +14,17 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     private List<ScoreSaveClass> _playerScoreList;
 
+    [Header("===save manager===")]
+    [SerializeField] SaveManager _saveManager;
+
     public List<ScoreSaveClass> playerScoreList => _playerScoreList;
 
     protected override void Singleton_Awake()
     {
         _playerScoreList = new List<ScoreSaveClass>();
+
+        // 데이터 Load + ui 업데이트
+        F_LoadScoreAndUpdateUi();
 
         // 테스트용
         /*
@@ -28,12 +34,13 @@ public class GameManager : Singleton<GameManager>
         _playerScoreList.Add(new ScoreSaveClass("4", 10));
 
         F_SortByScore();
-        
-        for (int i = 0; i < _playerScoreList.Count; i++) 
-        {
-            UiManager.Instnace.F_AddToScoreList(_playerScoreList[i]);
-        }
         */
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+            _saveManager.F_Save();
     }
 
     public void F_SetPlayerScore(string name, int score)
@@ -75,5 +82,25 @@ public class GameManager : Singleton<GameManager>
     public int CompareIntMethod(ScoreSaveClass c1, ScoreSaveClass c2)
     {
         return c2.Score.CompareTo(c1.Score);
+    }
+
+    private void F_LoadScoreAndUpdateUi() 
+    {
+        // 데이터 불러오기
+        ScoreSaveWrapper wrapper = _saveManager.F_Load();
+        if (wrapper == null)
+            return;
+
+        // 리스트에 복사해서 넣기
+        _playerScoreList = wrapper.ScroeSaveList;
+
+        // 정렬
+        F_SortByScore();
+
+        // Ui에 넣기 
+        for (int i = 0; i < _playerScoreList.Count; i++)
+        {
+            UiManager.Instnace.F_AddToScoreList(i, _playerScoreList[i]);
+        }
     }
 }
