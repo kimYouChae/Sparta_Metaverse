@@ -70,7 +70,6 @@ public class CameraMovement : MonoBehaviour
 
         // 최종 카메라 위치 설정
         _camera.position = new Vector3(clampedX, clampedY, 0) + _cameraZOffset;
-
     }
 
     private void F_MiniGame1Camera() 

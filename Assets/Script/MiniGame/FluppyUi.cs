@@ -17,6 +17,7 @@ public class FluppyUi : MonoBehaviour
         if (!_timeCount.gameObject.activeSelf)
             _timeCount.gameObject.SetActive(true);
 
+        // -1이 들어오면 끄기 
         if (time < 0)
             _timeCount.gameObject.SetActive(false);
 

@@ -59,7 +59,7 @@ public class BlockGenerate : MonoBehaviour
         StartCoroutine(IE_BlockMove());
     }
 
-    public void F_StopFlappyBird() 
+    public void F_StopFlappyBirdCoru() 
     {
         StopAllCoroutines();
     }
