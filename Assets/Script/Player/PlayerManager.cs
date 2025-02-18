@@ -24,10 +24,11 @@ public class PlayerManager : Singleton<PlayerManager>
     public Transform playerTrs => _playerTrs;
     public PlayerStateType playerStateType => _playerStateType;
     public PlayerMovement playerMovement => _playerMovement;
+    public Player nowPlayer => _nowPlayer;
 
     protected override void Singleton_Awake()
     {
-        _nowPlayer = new Player("김유채" , 10 , 5 , 5);
+        _nowPlayer = new Player("김유채" , 5 , 5 , 5 , 3);
     }
 
     private void Start()
@@ -74,29 +75,45 @@ public class PlayerManager : Singleton<PlayerManager>
     // FluppyGame - 장애물과 충돌
     public void F_CollisionToBlcok() 
     {
-        bool flag = _nowPlayer.F_UpdateHp(-1);
+        bool flag = _nowPlayer.F_CheckHp(-1);
 
         // 죽으면 ?
         if (!flag)
         {
-            _playerStateType = PlayerStateType.Village;
+            // Fluppy Ui에서 팝업
+            MiniGameManager.Instnace.fluidUi.F_OnOffDiePopUp(true);
 
-            // 델리게이트 실행 
-            del_handlePlayerState.Invoke(_playerStateType);
+            // 플레이어 움직임 잠시 멈추기 
+            _playerMovement.F_NullMoveAction();
 
             // 미니게임 종료
             MiniGameManager.Instnace.fluppyBirdGame.F_StopFlappyBirdCoru();
-
-            // 플레이어 위치 0,0,0으로
-            F_ChangePlayerPosition(new Vector3(0, 0, 0));
         }
         else 
         {
             // 안죽으면 -> Fluppy Ui 업데이트 
             MiniGameManager.Instnace.fluidUi.F_UpdateHeartIcon(1);
         }
-        
     }
-    
+
+    // fluppyGame - 사망 팝업 확인 누를 시 
+    public void F_ClickDiePopUp() 
+    {
+        _playerStateType = PlayerStateType.Village;
+
+        // Fluppy Ui에서 팝업 끄기
+        MiniGameManager.Instnace.fluidUi.F_OnOffDiePopUp(false);
+
+        // 플레이어 점수 업데이트
+        _nowPlayer.F_UpdatePlayerState( FlappyScore : MiniGameManager.Instnace.fluppyBirdGame.FluppyScore);
+
+        // 델리게이트 실행 
+        del_handlePlayerState.Invoke(_playerStateType);
+
+        // 플레이어 위치 0,0,0으로
+        F_ChangePlayerPosition(new Vector3(0, 0, 0));
+    }
+
+
 }
 

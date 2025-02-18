@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
@@ -28,12 +29,24 @@ public class BlockGenerate : MonoBehaviour
     [Header("===Ui===")]
     [SerializeField] private FluppyUi _fluppuUi;
 
+    // 프로퍼티
+    public int FluppyScore => _score;
+
     public void F_StartFlappyBird() 
     {
         // 값 초기화 
         _blockCoolTime = 3f;
         _endOfMap = -12f;
         _score = 0;
+
+        // 플레이어 hp도 초기화 
+        float max = PlayerManager.Instnace.nowPlayer.PlayerMaxHp;
+        PlayerManager.Instnace.nowPlayer.F_UpdatePlayerState(MaxHP : (int)max);
+
+        // 점수 텍스트 초기화 
+        MiniGameManager.Instnace.fluidUi.F_UpdateScoreText(_score);
+        // 하트 초기화
+        MiniGameManager.Instnace.fluidUi.F_OnAllHeart();
 
         StartCoroutine(IE_WaitBeforeGame());
     }
@@ -62,6 +75,14 @@ public class BlockGenerate : MonoBehaviour
     public void F_StopFlappyBirdCoru() 
     {
         StopAllCoroutines();
+
+        // 만들어놓은 block 들 없애기 
+        for (int i = _generateBlock.Count - 1; i >= 0; i--) 
+        {
+            Transform _temp = _generateBlock[i];
+            _generateBlock.Remove(_temp);
+            Destroy(_temp.gameObject);
+        }
     }
 
     IEnumerator IE_BlockMove() 
@@ -131,6 +152,8 @@ public class BlockGenerate : MonoBehaviour
 
             // 점수 증가
             _score += 10;
+            // 점수 ui 업데이트 
+            MiniGameManager.Instnace.fluidUi.F_UpdateScoreText(_score);
 
             yield return new WaitForSeconds(_blockCoolTime);
         }
