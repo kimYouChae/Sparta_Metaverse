@@ -106,4 +106,18 @@ public class ScoreSaveClass
 
 }
 
+[System.Serializable]
+public class ScoreSaveWrapper
+{
+    [SerializeField] private List<ScoreSaveClass> _list;
+
+    public List<ScoreSaveClass> ScroeSaveList => _list;
+
+    public ScoreSaveWrapper(List<ScoreSaveClass> list) 
+    {
+        this._list = list;
+    }
+}
+
+
 #endregion
