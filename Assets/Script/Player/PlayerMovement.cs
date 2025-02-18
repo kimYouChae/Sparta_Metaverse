@@ -32,6 +32,11 @@ public class PlayerMovement : MonoBehaviour
             _movementAction.Invoke();
     }
 
+    public void F_NullMoveAction() 
+    {
+        _movementAction = null;
+    }
+
     // PlayerManger에서 상태가 변화될 때 1회 실행
     public void F_UpdatePlayeMonvement(PlayerStateType type) 
     {
@@ -58,8 +63,7 @@ public class PlayerMovement : MonoBehaviour
 
         //this.transform.position += new Vector3(hori, verti) * Time.deltaTime * 3f;
 
-        // ##TODO : 플레이어 속도로 바꿔야함 
-        _playerRb.velocity = new Vector2 (hori, verti) * 3f;
+        _playerRb.velocity = new Vector2 (hori, verti) * PlayerManager.Instnace.nowPlayer.PlayerSpeed;
     }
 
     private void F_MiniGameMovement() 
@@ -74,8 +78,9 @@ public class PlayerMovement : MonoBehaviour
 
     public void F_OnOffGravity() 
     {
-        // 1이면 0으로
-        // 0 이면 1로 
+        // 플레이어 중력은 초기에 0.5 이여야한다 
+        // 0.5 -> 0
+        // 0 -> 0.5
         _playerRb.gravityScale = _playerRb.gravityScale == _gravityForece ? 0 : _gravityForece;
     }
 }
