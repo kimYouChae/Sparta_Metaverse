@@ -8,6 +8,7 @@ using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 public class UiManager : Singleton<UiManager>
 {
     [Header("===Panel===")]
+    [SerializeField] private GameObject _beforePlayerInstance;    //플레이어 생성 전 ui
     [SerializeField] private GameObject _villagePanel;      // 마을 ui
     [SerializeField] private GameObject _fluppyPanel;       // 미니게임1 (플러피) ui
 
@@ -21,9 +22,9 @@ public class UiManager : Singleton<UiManager>
     [SerializeField] private Button _settingButton;         // 세팅 버튼 
     [SerializeField] private Button _inventoryButton;       // 인벤토리 버튼
     [SerializeField] private Button _enterGameButton;       // 게임시작 버튼
-    
+
     [Header("===Text===")]
-    [SerializeField] private GameObject _timeText;
+    [SerializeField] private TextMeshProUGUI _beforePlayerText; 
 
     [Header("===Prefab===")]
     [SerializeField] private GameObject _scoreContextPrefab;    // 이름 + 점수 프리팹
@@ -95,4 +96,13 @@ public class UiManager : Singleton<UiManager>
         _obj.GetChild(2).GetComponent<TextMeshProUGUI>().text = scoreclass.Score.ToString();
     }
 
+    public void F_BeforeGameStart(int cnt) 
+    {
+        _beforePlayerText.text = cnt.ToString() + " 초";
+
+        // 0이면 -> 끄기 
+        if (cnt <= 0 )
+            _beforePlayerInstance.gameObject.SetActive(false);
+
+    }
 }
