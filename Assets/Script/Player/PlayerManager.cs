@@ -29,9 +29,27 @@ public class PlayerManager : Singleton<PlayerManager>
     protected override void Singleton_Awake()
     {
         _nowPlayer = new Player("김유채" , 5 , 5 , 5 , 3);
+
+        // Photon에서 플레이어 생성 시 실행할 델리게이트
+        PhotonManager.Instnace.playerCreated += SetPlayer;
     }
 
-    private void Start()
+    public void SetPlayer() 
+    {
+        // 포톤에서 생성한 플레이어를 가져오기
+        _playerTrs = PhotonManager.Instnace.photonPlayer.transform;
+
+        // movement에 플레이어 주입
+        _playerMovement.F_SettinPlayer(_playerTrs);
+        // camaeraMove에 플레이어 주입 
+        _cameraMovement.F_SettingPlayer(_playerTrs);
+
+        // player타입에 따른 player/camere 동작 
+        F_InitPlayer();
+
+    }
+
+    private void F_InitPlayer() 
     {
         // 처음은 마을로 설정 
         _playerStateType = PlayerStateType.Village;
@@ -46,10 +64,6 @@ public class PlayerManager : Singleton<PlayerManager>
 
         // 초기 실행
         del_handlePlayerState.Invoke(PlayerStateType.Village);
-    }
-
-    private void Update()
-    {
     }
 
     public void F_ChangePlayerPosition(Vector3 potision) 

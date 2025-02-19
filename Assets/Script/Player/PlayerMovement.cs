@@ -17,21 +17,35 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _gravityForece = 0.5f;
     [SerializeField] private float _addForeAmount = 100f;
 
-    void Start()
+    // PlayerManger에서 받아오기 - 포톤 플레이어를 만든 후 실행해야함
+    public void F_SettinPlayer(Transform photonPlayer) 
     {
-        _player = PlayerManager.Instnace.playerTrs;
-        _playerRb = _player.GetComponent<Rigidbody2D>();
+        _player = photonPlayer;
+        _playerRb = photonPlayer.GetComponent<Rigidbody2D>();
 
         // 초기 - 마을 
         _movementAction = F_MovePlayer;
+
+        // 플레이어 움직임 코루틴 시작
+        StartCoroutine(IE_PlayerMovenet());
     }
 
-    void Update()
+    #region 플레이어 움직임 코루틴 
+    
+    private IEnumerator IE_PlayerMovenet() 
     {
-        if (_movementAction != null)
-            _movementAction.Invoke();
+        while (true)
+        {
+            if (_movementAction != null)
+                _movementAction.Invoke();
+            // 매프레임마다 
+            yield return null;
+        }
     }
+    #endregion
 
+    #region 플레이어 movement 동작 메서드 
+    
     public void F_NullMoveAction() 
     {
         _movementAction = null;
@@ -86,4 +100,6 @@ public class PlayerMovement : MonoBehaviour
         // 0 -> 0.5
         _playerRb.gravityScale = _playerRb.gravityScale == _gravityForece ? 0 : _gravityForece;
     }
+
+    #endregion
 }
