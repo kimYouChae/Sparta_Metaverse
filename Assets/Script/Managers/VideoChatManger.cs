@@ -11,9 +11,7 @@ public class VideoChatManger : Singleton<VideoChatManger>
     [SerializeField] private string _currentChannelName;
 
     [Header("===오브젝트===")]
-    [SerializeField]
     static public GameObject _videoChatObject;    // raw 이미지 프리팹
-    [SerializeField]
     static public Transform _videoChatLayout;     // 프리팹 담길 상위 부모 
 
     [Header("===아고라 인스턴스===")]
@@ -26,6 +24,9 @@ public class VideoChatManger : Singleton<VideoChatManger>
 
     private void Start()
     {
+        _videoChatObject = GameManager.Instnace._videoMangerChatObject;
+        _videoChatLayout = GameManager.Instnace._videoMangerLayout;
+
         // rtc 엔진 생성, 초기화
         SetUpVideoRtcEngine();
 
@@ -103,7 +104,7 @@ public class VideoChatManger : Singleton<VideoChatManger>
         }
         public override void OnUserJoined(RtcConnection connection, uint remoteUid, int elapsed)
         {
-
+            MakeVideoView(remoteUid, _chatManger._currentChannelName);
         }
     }
 
@@ -117,6 +118,7 @@ public class VideoChatManger : Singleton<VideoChatManger>
         rtcEngine.EnableVideo();
 
         // 채널에 뷰 생성 
+        string _cameraName = PlayerManager.Instnace.nowPlayer.PlayerName;
         MakeVideoView(0, channelName);
 
         Debug.Log($"{channelName} 의 채널에 조인 ");
