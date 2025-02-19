@@ -47,14 +47,27 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     IEnumerator CreatePlayer() 
     {
         // 실행 이후 즉시 생성보다 여유시간을 주고 생성 (혹시 모를 오류 방지)
-        yield return new WaitForSeconds(1);
+        for (int i = 5; i >= 0; i--) 
+        {
+            // Ui 업데이트
+            UiManager.Instnace.F_BeforeGameStart(i);
 
-        // 생성 시 닉네임 
-        PhotonNetwork.NickName = "임시이름";
+            // 1초 기다리기
+            yield return new WaitForSeconds(1);
+        }
+
+        // 입력받은 닉네임 가져오기 
+        PhotonNetwork.NickName = UiManager.Instnace.F_InputName();
 
         // 플레이어 생성 
         // PhotonNetwork의 Instantiate 사용 
         _player = PhotonNetwork.Instantiate("Player", new Vector3(0,0,0), Quaternion.identity);
+
+        if (_player == null)
+        {
+            Debug.Log("생성한 플레이어가 null");
+            yield break;
+        }
 
         // 플레이어를 생성하기 전 세팅
         // 1. Resources 폴더에 "Player" 라는 이름의 프리팹이 있어야함

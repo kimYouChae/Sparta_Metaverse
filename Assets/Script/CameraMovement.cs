@@ -24,23 +24,38 @@ public class CameraMovement : MonoBehaviour
     [Header("===Action===")]
     [SerializeField] Action _cameraAction;
 
-    private void Start()
+    // PlayerManger에서 받아오기 - 포톤 플레이어를 만든 후 실행해야함
+    public void F_SettingPlayer(Transform photonPlayer) 
     {
-        _playerTrs = PlayerManager.Instnace.playerTrs;
+        _playerTrs = photonPlayer;
 
         // 초기 - 마을
         _cameraAction = F_CheckLimitAndFollow;
+
+        // 카메라 동작 코루틴 실행
+        StartCoroutine(IE_CameraMove());
     }
 
-    private void LateUpdate()
+    #region 카메라 움직임 코루틴 
+    
+    private IEnumerator IE_CameraMove() 
     {
-        if (_camera != null) 
+        while (true) 
         {
-            if(_cameraAction != null)
-                _cameraAction.Invoke();
+            if (_camera != null)
+            {
+                if (_cameraAction != null)
+                    _cameraAction.Invoke();
+            }
+
+            // 매프레임마다 
+            yield return null;
         }
     }
+    #endregion
 
+    #region 카메라 movement 동작 메서드 
+    
     // PlayerManger에서 상태가 변화될 때 1회 실행
     public void F_UpdateCameraMovement(PlayerStateType type) 
     {
@@ -76,4 +91,6 @@ public class CameraMovement : MonoBehaviour
     {
         _camera.position = _miniGameOne.position + _cameraZOffset;
     }
+
+    #endregion
 }
