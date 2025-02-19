@@ -71,13 +71,13 @@ public class PlayerMovement : MonoBehaviour
         {
             // 마을일때 -> 중력 x , wasd로 이동 
             case PlayerStateType.Village:
-                F_OnOffGravity();
+                F_OnOffGravity(0);
                 _movementAction = F_MovePlayer;
                 break;
 
-            // 미니게임1 -> 중력 0, addforce
+            // 미니게임1 -> 중력 0.5 (BlockGenerate스크립트에서 게임 시작 시 바꿈 )
             case PlayerStateType.MinigameOne:
-                // F_OnOffGravity();
+                // F_OnOffGravity(0.5f);
                 _movementAction = F_MiniGameMovement;
                 break;
         }
@@ -103,12 +103,12 @@ public class PlayerMovement : MonoBehaviour
         }   
     }
 
-    public void F_OnOffGravity() 
+    public void F_OnOffGravity(float gravity) 
     {
         // 플레이어 중력은 초기에 0.5 이여야한다 
         // 0.5 -> 0
         // 0 -> 0.5
-        _playerRb.gravityScale = _playerRb.gravityScale == _gravityForece ? 0 : _gravityForece;
+        _playerRb.gravityScale = gravity;
     }
 
     #endregion

@@ -63,7 +63,7 @@ public class BlockGenerate : MonoBehaviour
         _fluppuUi.F_UpeateTimeCount(-1);
 
         // 카운터 후 플레이어 중력 조정
-        PlayerManager.Instnace.playerMovement.F_OnOffGravity();
+        PlayerManager.Instnace.playerMovement.F_OnOffGravity(0.5f);
 
         // 블럭 생성, 움직임, 삭제 동작
         StartCoroutine(IE_BlockGeneMove());
