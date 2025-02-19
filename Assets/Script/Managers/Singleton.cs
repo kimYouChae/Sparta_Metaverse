@@ -39,14 +39,12 @@ public abstract class Singleton<T> : MonoBehaviour
         Singleton_Awake();
 
         // dontdestoryOnLoad 설정 
-        F_SettingDontDestroy();
+        // F_SettingDontDestroy();
     }
 
-    private void F_SettingDontDestroy() 
+    // DontDestory할 애들만 하위의 awake에 넣어주기 
+    protected void F_SettingDontDestroy() 
     {
-        if (gameObject.name == "DontDestoryManager") 
-        {
-            DontDestroyOnLoad(this.gameObject);
-        }
+        DontDestroyOnLoad(this.gameObject);
     }
 }
