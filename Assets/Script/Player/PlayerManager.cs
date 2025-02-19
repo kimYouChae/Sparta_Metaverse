@@ -31,7 +31,7 @@ public class PlayerManager : Singleton<PlayerManager>
     {
 
         // Photon에서 플레이어 생성 시 실행할 델리게이트
-        PhotonManager.Instnace.playerCreated += SetPlayer;
+        PhotonManager.Instnace.Del_playerCreated += SetPlayer;
     }
 
     public void SetPlayer() 

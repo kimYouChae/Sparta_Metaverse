@@ -17,6 +17,10 @@ public class GameManager : Singleton<GameManager>
     [Header("===save manager===")]
     [SerializeField] SaveManager _saveManager;
 
+    [Header("===Video manager use===")]
+    public GameObject _videoMangerChatObject;
+    public Transform _videoMangerLayout;
+
     public List<ScoreSaveClass> playerScoreList => _playerScoreList;
 
     protected override void Singleton_Awake()

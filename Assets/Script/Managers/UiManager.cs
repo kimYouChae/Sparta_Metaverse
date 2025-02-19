@@ -35,6 +35,9 @@ public class UiManager : Singleton<UiManager>
     [Header("===Text Input Field===")]
     [SerializeField] TMP_InputField _nameInputField;
 
+    public Transform _canvas;
+    public GameObject _conferenceCameraPanel;
+
     protected override void Singleton_Awake()
     {
        
