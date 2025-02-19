@@ -1,4 +1,5 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -11,8 +12,15 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public static PhotonManager Instnace { get => instance; }
 
     [Header("===Info===")]
-    string roomVersion = "1.0.0";
-    string roomName = "BlackVillage";
+    [SerializeField] string roomVersion = "1.0.0";
+    [SerializeField] string roomName = "BlackVillage";
+
+    [Header("===동기화 Player===")]
+    [SerializeField] private GameObject _player;            // 생성할 플레이어 오브젝트
+    public delegate void PlayerCreateEventHandler();        // 플레이어가 생성 후/ 생성한 플레이어들을 할당하는 델리게이트
+    public event PlayerCreateEventHandler playerCreated;
+
+    public GameObject photonPlayer => _player; 
 
     private void Awake()
     {
@@ -24,10 +32,40 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         DontDestroyOnLoad(instance);
 
         // 게임시작 시 포톤 세팅 
-        // 1. 마스터 클라이언트 씬 동기화
-        // 2. 연결 
+        // 1. 포톤서버에 연결, 로비 생성 후 방 생성
         F_MasterClient();
+
+        // 2. 플레이어 생성 
+        StartCoroutine(CreatePlayer());
     }
+
+    void OnPlayerCreate() 
+    {
+        playerCreated?.Invoke();
+    }
+
+    IEnumerator CreatePlayer() 
+    {
+        // 실행 이후 즉시 생성보다 여유시간을 주고 생성 (혹시 모를 오류 방지)
+        yield return new WaitForSeconds(1);
+
+        // 생성 시 닉네임 
+        PhotonNetwork.NickName = "임시이름";
+
+        // 플레이어 생성 
+        // PhotonNetwork의 Instantiate 사용 
+        _player = PhotonNetwork.Instantiate("Player", new Vector3(0,0,0), Quaternion.identity);
+
+        // 플레이어를 생성하기 전 세팅
+        // 1. Resources 폴더에 "Player" 라는 이름의 프리팹이 있어야함
+        // 2. 포톤 클라우드 서버에 동기화
+        // : Photon View, Photon Transform , Photon Animator View 컴포넌트가 부착되어 있어야함
+
+        // 플레어어 생성 완료 델리게이트 실행 
+        OnPlayerCreate();
+    }
+
+    #region 포톤 서버 연결, 포톤 로비 생성 후 방 (room) 생성
 
     private void F_MasterClient() 
     {
@@ -45,17 +83,61 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     }
 
-    // 서버 마스터가 접속하면 출력 
     public override void OnConnectedToMaster() 
     {
         // MonoBehaviourPunCallbacks 의 OnConnected~함수를 오버라이딩
+        // 서버 마스터가 접속하면 메서드 실행 
         Debug.Log("포톤에 접속 성공 유무 : " + PhotonNetwork.IsConnected);
+
+        // 로비 접속 추가 
+        OnJoinedLobby();
     }
 
     public override void OnJoinedLobby()
     {
         // Photon에서 Lobby가 의미하는것은 ?
-        // 멀티플레이어에서 플레이어가 "입장"할 수 있는 공간 
-        // OnJoinedLobby 메서드 : 마스터 서버의 로비에 입장 했을 때 호출
+        // 멀티플레이어에서 플레이어가 입장하기 전 가상의 대기공간
+        // 서버 접속(Master Server) -> 로비 접속(Lobby) -> 룸 생성/접속(Room) -> 게임 씬 로드
+        // 물리적인 씬 과는 상관이 없음 
+
+        // 로비에 접속하면 실행
+
+        // Debug.Log("로비접속 "  + PhotonNetwork.InLobby);
+        JointRoom();
     }
+
+    private void JointRoom() 
+    {
+        // 마스터만 방 생성 
+        // 방 (room) 생성하는 함수 정의
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = 3;
+        roomOptions.IsOpen = true;
+        roomOptions.IsVisible = true;
+
+        // 생성 후 바로 입장
+        PhotonNetwork.JoinOrCreateRoom(roomName , roomOptions , TypedLobby.Default);
+        // -> 방 이름 기준으로 작동함
+        // 즉 마스터클라이언트가 방을 만들면, 다음 접속자는 이름에 해당하는 방이 이미 있으니 거기로 접속 
+    }
+
+    public override void OnCreatedRoom()
+    {
+        // 방 생성시 호출 (오버라이딩)
+        Debug.Log("방 생성 완료 : " + PhotonNetwork.CurrentRoom.Name );
+    }
+
+    public override void OnJoinedRoom()
+    {
+        // 방 입장 시 호출 (오버라이딩)
+        Debug.Log($"{PhotonNetwork.CurrentRoom.Name} 에 입장 / 방에 있는지 여부 : {PhotonNetwork.InRoom}" +
+            $" 인원 수 : {PhotonNetwork.CurrentRoom.PlayerCount}" );
+    }
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        // 방 접속 실패 시 호출 (오버라이딩)
+        Debug.Log($"JoinRoom Failed {returnCode} {message} / 방 없음 -> 생성시도중....");
+        JointRoom();
+    }
+    #endregion
 }
