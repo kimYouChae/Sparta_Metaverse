@@ -760,7 +760,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -20}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 250.01, y: 100.01}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &60556278
 MonoBehaviour:
@@ -2193,6 +2193,68 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &198478016
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 198478017}
+  - component: {fileID: 198478018}
+  m_Layer: 5
+  m_Name: ConferenceVideo
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &198478017
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198478016}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1871072344}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 200, y: 700}
+  m_Pivot: {x: 1, y: 0.5}
+--- !u!114 &198478018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 198478016}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 1
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 0
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &201323996
 GameObject:
   m_ObjectHideFlags: 0
@@ -2389,7 +2451,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 54, y: -232}
-  m_SizeDelta: {x: 385.01, y: 70.01}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &217524859
 MonoBehaviour:
@@ -7802,6 +7864,53 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &491279309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 491279310}
+  - component: {fileID: 491279311}
+  m_Layer: 0
+  m_Name: AgoraSetUp
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &491279310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491279309}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -87.82042, y: -91.07027, z: -0.28625584}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2115564422}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &491279311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491279309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aff03abdbc332946ae5a64a16232187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appID: 85636c045ba54ceda8cee9c505f35e5b
+  _token: 
+  _currentChannelName: 
 --- !u!1 &495009736
 GameObject:
   m_ObjectHideFlags: 0
@@ -8544,7 +8653,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -412, y: -232}
-  m_SizeDelta: {x: 200.01, y: 100.01}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &560933807
 MonoBehaviour:
@@ -9583,6 +9692,7 @@ GameObject:
   - component: {fileID: 686664058}
   - component: {fileID: 686664060}
   - component: {fileID: 686664059}
+  - component: {fileID: 686664061}
   m_Layer: 0
   m_Name: ConferenceHall
   m_TagString: Untagged
@@ -9702,6 +9812,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &686664061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686664057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811e97eaba3eab14a999acc9d7bb1872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chanelName: ConferenceRoom
 --- !u!1 &699191421
 GameObject:
   m_ObjectHideFlags: 0
@@ -9717,7 +9840,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &699191422
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10264,7 +10387,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &735528382
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13075,7 +13198,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 150, y: -20}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 280.01, y: 70.01}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1114300875
 MonoBehaviour:
@@ -14542,8 +14665,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a39423e88a9360246b5d27e6e089cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomVersion: 1.0.0
-  roomName: BlackVillage
+  _roomVersion: 1.0.0
+  _roomName: BlackVillage
   _player: {fileID: 0}
 --- !u!4 &1299723773
 Transform:
@@ -15507,6 +15630,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerScoreList: []
   _saveManager: {fileID: 1422882164}
+  _videoMangerChatObject: {fileID: 3544969894960417312, guid: 3ceb8ce5535e2f74aa5879b64c58195e, type: 3}
+  _videoMangerLayout: {fileID: 198478017}
 --- !u!1 &1430750821
 GameObject:
   m_ObjectHideFlags: 0
@@ -18840,6 +18965,7 @@ RectTransform:
   - {fileID: 699191422}
   - {fileID: 495183059}
   - {fileID: 735528382}
+  - {fileID: 198478017}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -18989,6 +19115,8 @@ MonoBehaviour:
   _scoreContextPrefab: {fileID: 273564396215623820, guid: 53e285eaa9001eb47b5140d4eb5eb890, type: 3}
   _content: {fileID: 1295941495}
   _nameInputField: {fileID: 1570220367}
+  _canvas: {fileID: 1871072344}
+  _conferenceCameraPanel: {fileID: 198478016}
 --- !u!1 &1930052754
 GameObject:
   m_ObjectHideFlags: 0
@@ -20301,7 +20429,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200.01, y: 200.01}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2088629343
 MonoBehaviour:
@@ -20652,6 +20780,7 @@ Transform:
   - {fileID: 101462191}
   - {fileID: 1924480073}
   - {fileID: 575311389}
+  - {fileID: 491279310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2127230741
