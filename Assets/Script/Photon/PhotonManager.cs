@@ -56,8 +56,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             yield return new WaitForSeconds(1);
         }
 
-        // 생성 시 닉네임 
-        PhotonNetwork.NickName = "임시이름";
+        // 입력받은 닉네임 가져오기 
+        PhotonNetwork.NickName = UiManager.Instnace.F_InputName();
 
         // 플레이어 생성 
         // PhotonNetwork의 Instantiate 사용 

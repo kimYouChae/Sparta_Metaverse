@@ -32,6 +32,9 @@ public class UiManager : Singleton<UiManager>
     [Header("===Score Scroll View===")]
     [SerializeField] Transform _content;               // Ω∫≈©∑—∫‰¿« Context 
 
+    [Header("===Text Input Field===")]
+    [SerializeField] TMP_InputField _nameInputField;
+
     protected override void Singleton_Awake()
     {
        
@@ -104,5 +107,10 @@ public class UiManager : Singleton<UiManager>
         if (cnt <= 0 )
             _beforePlayerInstance.gameObject.SetActive(false);
 
+    }
+
+    public string F_InputName() 
+    {
+        return _nameInputField.text;
     }
 }
