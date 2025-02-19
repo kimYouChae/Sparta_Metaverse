@@ -80,7 +80,7 @@ public class UiManager : Singleton<UiManager>
 
     public void F_AddToScoreList(int idx ,ScoreSaveClass scoreclass) 
     {
-        Debug.Log($"{idx} + {scoreclass.Name} / {scoreclass.Score}");
+        //Debug.Log($"{idx} + {scoreclass.Name} / {scoreclass.Score}");
         Transform _obj = Instantiate(_scoreContextPrefab).transform;
 
         // 상위빈오브젝트
