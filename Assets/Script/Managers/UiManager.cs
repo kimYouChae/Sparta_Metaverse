@@ -35,6 +35,8 @@ public class UiManager : Singleton<UiManager>
     [Header("===Text Input Field===")]
     [SerializeField] TMP_InputField _nameInputField;
 
+    public Transform _canvas;
+
     protected override void Singleton_Awake()
     {
        
