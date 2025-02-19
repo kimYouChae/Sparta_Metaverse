@@ -12,13 +12,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     public static PhotonManager Instnace { get => instance; }
 
     [Header("===Info===")]
-    [SerializeField] string roomVersion = "1.0.0";
-    [SerializeField] string roomName = "BlackVillage";
+    [SerializeField] string _roomVersion = "1.0.0";
+    [SerializeField] string _roomName = "BlackVillage";
 
     [Header("===동기화 Player===")]
     [SerializeField] private GameObject _player;            // 생성할 플레이어 오브젝트
-    public delegate void PlayerCreateEventHandler();        // 플레이어가 생성 후/ 생성한 플레이어들을 할당하는 델리게이트
-    public event PlayerCreateEventHandler playerCreated;
+    public delegate void DEL_PlayerCreateEventHandler();        // 플레이어가 생성 후/ 생성한 플레이어들을 할당하는 델리게이트
+    public event DEL_PlayerCreateEventHandler Del_playerCreated;
 
     public GameObject photonPlayer => _player; 
 
@@ -41,7 +41,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void OnPlayerCreate() 
     {
-        playerCreated?.Invoke();
+        Del_playerCreated?.Invoke();
     }
 
     IEnumerator CreatePlayer() 
@@ -87,7 +87,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
 
         // 게임버전 할당 
-        PhotonNetwork.GameVersion = roomVersion;
+        PhotonNetwork.GameVersion = _roomVersion;
         Debug.Log("포톤 서버 초당 데이터 통신 수 : " + PhotonNetwork.SendRate);
 
         // ** 포톤 사용자들을 포톤 서버에 연결
@@ -129,7 +129,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         roomOptions.IsVisible = true;
 
         // 생성 후 바로 입장
-        PhotonNetwork.JoinOrCreateRoom(roomName , roomOptions , TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(_roomName , roomOptions , TypedLobby.Default);
         // -> 방 이름 기준으로 작동함
         // 즉 마스터클라이언트가 방을 만들면, 다음 접속자는 이름에 해당하는 방이 이미 있으니 거기로 접속 
     }
