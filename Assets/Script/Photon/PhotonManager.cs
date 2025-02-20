@@ -63,13 +63,13 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             yield break;
         }
 
+        // 플레이어 생성 후 버튼이 On 되게 
+        UiManager.Instnace.F_EnterButton();
+
         // 플레이어를 생성하기 전 세팅
         // 1. Resources 폴더에 "Player" 라는 이름의 프리팹이 있어야함
         // 2. 포톤 클라우드 서버에 동기화
         // : Photon View, Photon Transform , Photon Animator View 컴포넌트가 부착되어 있어야함
-
-        // 플레어어 생성 완료 델리게이트 실행 -> [2.20수정] UiManager에 버튼 클릭시 실행되게 
-        // OnPlayerCreate();
     }
 
     #region 포톤 서버 연결, 포톤 로비 생성 후 방 (room) 생성

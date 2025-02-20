@@ -116,14 +116,6 @@ public class UiManager : Singleton<UiManager>
     public void F_BeforeGameStart(int cnt) 
     {
         _beforePlayerText.text = cnt.ToString() + " 초";
-
-        // 0이면 -> 입장가능
-        if (cnt <= 0)
-        { 
-            // 입장 버튼 On
-            F_EnterButton();
-        }
-
     }
 
     public string F_InputName() 
@@ -131,9 +123,9 @@ public class UiManager : Singleton<UiManager>
         return _nameInputField.text;
     }
 
-    private void F_EnterButton() 
+    public void F_EnterButton() 
     {
-        // 캐릭터 생성 -> 마을 입장 버튼 
+        // 캐릭터 생성 후 -> 마을 입장 버튼 
         _startGmaeButton.gameObject.SetActive(true);
     }
 }
