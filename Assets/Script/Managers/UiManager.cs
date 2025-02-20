@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 using static Unity.IO.LowLevel.Unsafe.AsyncReadManagerMetrics;
 
@@ -19,9 +20,10 @@ public class UiManager : Singleton<UiManager>
     [SerializeField] private GameObject _scorePopUp;
 
     [Header("===Button===")]
+    [SerializeField] private Button _startGmaeButton;       // 게임시작 버튼
     [SerializeField] private Button _settingButton;         // 세팅 버튼 
     [SerializeField] private Button _inventoryButton;       // 인벤토리 버튼
-    [SerializeField] private Button _enterGameButton;       // 게임시작 버튼
+    [SerializeField] private Button _enterGameButton;       // 미니 게임시작 버튼
 
     [Header("===Text===")]
     [SerializeField] private TextMeshProUGUI _beforePlayerText; 
@@ -45,13 +47,18 @@ public class UiManager : Singleton<UiManager>
 
     private void Start()
     {
+        GameManager.Instnace.Del_playerCreated += () => _beforePlayerInstance.SetActive(false);
+
+        // 게임 입장 버튼 : Photonmanager의 델리게이트 실행
+        _startGmaeButton.onClick.AddListener(() => GameManager.Instnace.OnPlayerCreate());
+
         // 세팅버튼 : end팝업 on off
         _settingButton.onClick.AddListener(() => _endGamePopUp.SetActive(!_endGamePopUp.activeSelf));
         // 인벤토리 버튼 : 인벤토리 팝업 on off
         _inventoryButton.onClick.AddListener(() => _inventoryPopUp.SetActive(!_inventoryPopUp.activeSelf));
 
-        // 게임시작버튼 : 게임시작 로직 
-        _enterGameButton.onClick.AddListener(PlayerManager.Instnace.F_EnterGame);
+        // 미니 게임시작버튼 : 게임시작 로직 
+        _enterGameButton.onClick.AddListener(PlayerManager.Instnace.F_EnterMiniGame);
     }
 
     // player타입에 따라 panel on off
@@ -106,14 +113,23 @@ public class UiManager : Singleton<UiManager>
     {
         _beforePlayerText.text = cnt.ToString() + " 초";
 
-        // 0이면 -> 끄기 
-        if (cnt <= 0 )
-            _beforePlayerInstance.gameObject.SetActive(false);
+        // 0이면 -> 입장가능
+        if (cnt <= 0)
+        { 
+            // 입장 버튼 On
+            F_EnterButton();
+        }
 
     }
 
     public string F_InputName() 
     {
         return _nameInputField.text;
+    }
+
+    private void F_EnterButton() 
+    {
+        // 캐릭터 생성 -> 마을 입장 버튼 
+        _startGmaeButton.gameObject.SetActive(true);
     }
 }

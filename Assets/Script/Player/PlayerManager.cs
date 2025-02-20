@@ -29,9 +29,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     protected override void Singleton_Awake()
     {
-
-        // Photon에서 플레이어 생성 시 실행할 델리게이트
-        PhotonManager.Instnace.Del_playerCreated += SetPlayer;
+        // 게임시작 버튼 누르면 실행할 함수
+        GameManager.Instnace.Del_playerCreated += SetPlayer;
     }
 
     public void SetPlayer() 
@@ -119,7 +118,7 @@ public class PlayerManager : Singleton<PlayerManager>
     }
 
     // 게임시작 
-    public void F_EnterGame() 
+    public void F_EnterMiniGame() 
     {
         _playerStateType = PlayerStateType.MinigameOne;
 
