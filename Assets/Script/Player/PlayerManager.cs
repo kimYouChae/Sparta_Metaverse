@@ -141,9 +141,12 @@ public class PlayerManager : Singleton<PlayerManager>
     {
         // 모자 스프라이트 가져오기 
         Sprite hat = UiManager.Instnace.characterCustom.F_NowHat();
+        Color color = UiManager.Instnace.characterCustom.F_HatColor();
+        
 
         // 플레이어 하위의 오브젝트에 넣어주기
         _playerTrs.GetChild(0).GetComponent<SpriteRenderer>().sprite = hat;
+        _playerTrs.GetChild(0).GetComponent<SpriteRenderer>().color = color;
 
     }
 }
