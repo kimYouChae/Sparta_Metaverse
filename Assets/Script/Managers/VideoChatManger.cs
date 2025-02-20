@@ -65,7 +65,7 @@ public class VideoChatManger : Singleton<VideoChatManger>
         // 화면 영역 
         config.dimensions = new VideoDimensions(200, 200);
         config.frameRate = 15;
-        config.bitrate = 0;
+        config.bitrate = 1000;
 
         rtcEngine.SetVideoEncoderConfiguration(config);
         rtcEngine.SetChannelProfile(CHANNEL_PROFILE_TYPE.CHANNEL_PROFILE_COMMUNICATION);
@@ -106,6 +106,36 @@ public class VideoChatManger : Singleton<VideoChatManger>
         {
             MakeVideoView(remoteUid, _chatManger._currentChannelName);
         }
+        // 로컬 비디오 스트림 상태 변경 콜백
+        public override void OnLocalVideoStateChanged(VIDEO_SOURCE_TYPE source, LOCAL_VIDEO_STREAM_STATE state, LOCAL_VIDEO_STREAM_REASON errorCode)
+        {
+            Debug.Log($"로컬 비디오 상태: {state}, 에러 코드: {errorCode}");
+
+            switch (state)
+            {
+                case LOCAL_VIDEO_STREAM_STATE.LOCAL_VIDEO_STREAM_STATE_CAPTURING:
+                    Debug.Log("카메라 캡처 중 - 카메라가 정상적으로 활성화되었습니다.");
+                    break;
+                case LOCAL_VIDEO_STREAM_STATE.LOCAL_VIDEO_STREAM_STATE_STOPPED:
+                    Debug.Log("카메라 캡처가 중지되었습니다.");
+                    break;
+                case LOCAL_VIDEO_STREAM_STATE.LOCAL_VIDEO_STREAM_STATE_FAILED:
+                    // 오류 코드별 상세 처리
+                    if (errorCode == LOCAL_VIDEO_STREAM_REASON.LOCAL_VIDEO_STREAM_REASON_DEVICE_BUSY)
+                    {
+                        Debug.LogError("카메라 장치가 이미 사용 중입니다.");
+                    }
+                    else if (errorCode == LOCAL_VIDEO_STREAM_REASON.LOCAL_VIDEO_STREAM_REASON_DEVICE_NO_PERMISSION)
+                    {
+                        Debug.LogError("카메라 접근 권한이 없습니다.");
+                    }
+                    else
+                    {
+                        Debug.LogError($"카메라 캡처 실패! 상세 오류 코드: {errorCode}");
+                    }
+                    break;
+            }
+        }
     }
 
     // 해당 채널에 들어오면 
@@ -127,8 +157,8 @@ public class VideoChatManger : Singleton<VideoChatManger>
     // 해당 채널에서 나가면 
     public void Leave()
     {
-        rtcEngine.LeaveChannel();
         rtcEngine.DisableVideo();
+        rtcEngine.LeaveChannel();
 
         // 생성된 뷰 삭제 
         DestoryAll();
@@ -151,7 +181,7 @@ public class VideoChatManger : Singleton<VideoChatManger>
         }
         else
         {
-            videoSurface.SetForUser(uid, channelId, VIDEO_SOURCE_TYPE.VIDEO_SOURCE_REMOTE);
+            videoSurface.SetForUser(uid, channelId, VIDEO_SOURCE_TYPE.VIDEO_SOURCE_CAMERA_PRIMARY);
         }
 
         videoSurface.SetEnable(true);
