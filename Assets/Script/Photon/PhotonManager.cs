@@ -97,16 +97,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         Debug.Log("포톤에 접속 성공 유무 : " + PhotonNetwork.IsConnected);
 
         // 로비 접속 추가 
-        OnJoinedLobby();
+        // OnJoinedLobby();
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
-        // Photon에서 Lobby가 의미하는것은 ?
-        // 멀티플레이어에서 플레이어가 입장하기 전 가상의 대기공간
-        // 서버 접속(Master Server) -> 로비 접속(Lobby) -> 룸 생성/접속(Room) -> 게임 씬 로드
-        // 물리적인 씬 과는 상관이 없음 
-
         // 로비에 접속하면 실행
 
         // Debug.Log("로비접속 "  + PhotonNetwork.InLobby);
