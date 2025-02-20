@@ -21,6 +21,10 @@ public class GameManager : Singleton<GameManager>
     public GameObject _videoMangerChatObject;
     public Transform _videoMangerLayout;
 
+    // 게임시작 버튼 클릭 시 실행할 델리게이트
+    public delegate void DEL_PlayerCreateEventHandler();            // 플레이어가 생성 후/ 생성한 플레이어들을 할당하는 델리게이트
+    public event DEL_PlayerCreateEventHandler Del_playerCreated;
+
     public List<ScoreSaveClass> playerScoreList => _playerScoreList;
 
     protected override void Singleton_Awake()
@@ -45,6 +49,12 @@ public class GameManager : Singleton<GameManager>
     {
         if (Input.GetKeyDown(KeyCode.P))
             _saveManager.F_Save();
+    }
+
+    // UiManager에서 Start버튼 클릭 시 실행 
+    public void OnPlayerCreate()
+    {
+        Del_playerCreated?.Invoke();
     }
 
     public void F_SetPlayerScore(string name, int score)
