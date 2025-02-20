@@ -16,10 +16,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [SerializeField] string _roomName = "BlackVillage";
 
     [Header("===동기화 Player===")]
-    [SerializeField] private GameObject _player;            // 생성할 플레이어 오브젝트
-    public delegate void DEL_PlayerCreateEventHandler();        // 플레이어가 생성 후/ 생성한 플레이어들을 할당하는 델리게이트
-    public event DEL_PlayerCreateEventHandler Del_playerCreated;
-
+    [SerializeField] private GameObject _player;                    // 생성할 플레이어 오브젝트
+    private int _waitforPlayerInstance = 5;
+    
     public GameObject photonPlayer => _player; 
 
     private void Awake()
@@ -39,15 +38,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         StartCoroutine(CreatePlayer());
     }
 
-    void OnPlayerCreate() 
-    {
-        Del_playerCreated?.Invoke();
-    }
-
     IEnumerator CreatePlayer() 
     {
         // 실행 이후 즉시 생성보다 여유시간을 주고 생성 (혹시 모를 오류 방지)
-        for (int i = 5; i >= 0; i--) 
+        for (int i = _waitforPlayerInstance; i >= 0; i--) 
         {
             // Ui 업데이트
             UiManager.Instnace.F_BeforeGameStart(i);
@@ -74,8 +68,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         // 2. 포톤 클라우드 서버에 동기화
         // : Photon View, Photon Transform , Photon Animator View 컴포넌트가 부착되어 있어야함
 
-        // 플레어어 생성 완료 델리게이트 실행 
-        OnPlayerCreate();
+        // 플레어어 생성 완료 델리게이트 실행 -> [2.20수정] UiManager에 버튼 클릭시 실행되게 
+        // OnPlayerCreate();
     }
 
     #region 포톤 서버 연결, 포톤 로비 생성 후 방 (room) 생성

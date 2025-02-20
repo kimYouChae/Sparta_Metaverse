@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -29,9 +30,8 @@ public class PlayerManager : Singleton<PlayerManager>
 
     protected override void Singleton_Awake()
     {
-
-        // Photon에서 플레이어 생성 시 실행할 델리게이트
-        PhotonManager.Instnace.Del_playerCreated += SetPlayer;
+        // 게임시작 버튼 누르면 실행할 함수
+        GameManager.Instnace.Del_playerCreated += SetPlayer;
     }
 
     public void SetPlayer() 
@@ -46,6 +46,9 @@ public class PlayerManager : Singleton<PlayerManager>
         _playerMovement.F_SettinPlayer(_playerTrs);
         // camaeraMove에 플레이어 주입 
         _cameraMovement.F_SettingPlayer(_playerTrs);
+
+        // 모자씌우기
+        F_SettingHat();
 
         // player타입에 따른 player/camere 동작 
         F_InitPlayer();
@@ -119,7 +122,7 @@ public class PlayerManager : Singleton<PlayerManager>
     }
 
     // 게임시작 
-    public void F_EnterGame() 
+    public void F_EnterMiniGame() 
     {
         _playerStateType = PlayerStateType.MinigameOne;
 
@@ -131,6 +134,20 @@ public class PlayerManager : Singleton<PlayerManager>
 
         // 플레이어 위치 - 미니게임 위치로 
         F_ChangePlayerPosition(MiniGameManager.Instnace.FluppyPlayerTrs.position);
+    }
+
+    // 플레이어 모자 세팅
+    public void F_SettingHat() 
+    {
+        // 모자 스프라이트 가져오기 
+        Sprite hat = UiManager.Instnace.characterCustom.F_NowHat();
+        Color color = UiManager.Instnace.characterCustom.F_HatColor();
+        
+
+        // 플레이어 하위의 오브젝트에 넣어주기
+        _playerTrs.GetChild(0).GetComponent<SpriteRenderer>().sprite = hat;
+        _playerTrs.GetChild(0).GetComponent<SpriteRenderer>().color = color;
+
     }
 }
 
