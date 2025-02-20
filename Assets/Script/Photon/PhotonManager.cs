@@ -17,7 +17,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     [Header("===동기화 Player===")]
     [SerializeField] private GameObject _player;                    // 생성할 플레이어 오브젝트
-    private int _waitforPlayerInstance = 10;
+    private int _waitforPlayerInstance = 5;
     
     public GameObject photonPlayer => _player; 
 

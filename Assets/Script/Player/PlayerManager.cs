@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -45,6 +46,9 @@ public class PlayerManager : Singleton<PlayerManager>
         _playerMovement.F_SettinPlayer(_playerTrs);
         // camaeraMove에 플레이어 주입 
         _cameraMovement.F_SettingPlayer(_playerTrs);
+
+        // 모자씌우기
+        F_SettingHat();
 
         // player타입에 따른 player/camere 동작 
         F_InitPlayer();
@@ -130,6 +134,17 @@ public class PlayerManager : Singleton<PlayerManager>
 
         // 플레이어 위치 - 미니게임 위치로 
         F_ChangePlayerPosition(MiniGameManager.Instnace.FluppyPlayerTrs.position);
+    }
+
+    // 플레이어 모자 세팅
+    public void F_SettingHat() 
+    {
+        // 모자 스프라이트 가져오기 
+        Sprite hat = UiManager.Instnace.characterCustom.F_NowHat();
+
+        // 플레이어 하위의 오브젝트에 넣어주기
+        _playerTrs.GetChild(0).GetComponent<SpriteRenderer>().sprite = hat;
+
     }
 }
 

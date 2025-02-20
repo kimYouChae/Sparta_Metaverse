@@ -12,6 +12,8 @@ public class CharacterCustom : MonoBehaviour
     [SerializeField] private Button _rightArrow;
     [SerializeField] private Button _leftArrow;
 
+    public Sprite F_NowHat() => _hatList[_nowIndex].GetComponent<Image>().sprite;
+
     private void Awake()
     {
         _rightArrow.onClick.AddListener(F_ClickRight);
