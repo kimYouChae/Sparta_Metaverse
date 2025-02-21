@@ -111,8 +111,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     private void JointRoom() 
     {
-        // 마스터만 방 생성 
-        // 방 (room) 생성하는 함수 정의
+        // 방 정보 생성
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = 3;
         roomOptions.IsOpen = true;
